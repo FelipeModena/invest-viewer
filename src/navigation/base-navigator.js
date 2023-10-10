@@ -7,7 +7,7 @@ import { Settings } from "../screens/settings";
 
 const Tab = createBottomTabNavigator();
 
-export function RoutesBase() {
+export function BaseNavigator({ navigation }) {
   return (
     <Tab.Navigator>
       <Tab.Screen

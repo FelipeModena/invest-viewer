@@ -1,26 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
-import { RoutesBase } from "./src/navigation/routes-base";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login } from "./src/screens/login";
+import { LoginNavigator } from "./src/navigation/login-navigator";
+import { genericStyles } from "./src/assets/styles/style";
 
-const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="RoutesBase" component={RoutesBase} />
-      </Stack.Navigator>
+      {/* <BaseNavigator /> */}
+      <LoginNavigator />
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

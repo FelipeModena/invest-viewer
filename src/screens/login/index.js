@@ -1,37 +1,63 @@
 //login page with a form and a button to submit the form
 
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
-// import { login } from "../../services/auth";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { genericStyles } from "../../assets/styles/style";
+import imageStyle from "../../assets/styles/image-style";
+import Icon from "react-native-vector-icons/Ionicons";
+import authenticate from "../../store/services/auth";
 
 export function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    // const user = await login(email, password);
-    navigation.replace("homescreen", { email: email });
+    const user = await authenticate(email, password);
 
-    navigation.navigate("RoutesBase");
     if (user) {
-      navigation.navigate("Home");
+      navigation.navigate("Base");
     }
   };
 
   return (
-    <View>
-      <Text>Login</Text>
-      <TextInput
-        placeholder="email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        placeholder="password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-      <Button title="Login" onPress={handleLogin} />
-    </View>
+    <ScrollView
+      automaticallyAdjustKeyboardInsets={true}
+      style={genericStyles.body}
+    >
+      <View style={genericStyles.container}>
+        <Image
+          style={imageStyle.large}
+          source={require("../../assets/imgs/general/vault.png")}
+          resizeMode="contain"
+        />
+        <Text style={genericStyles.textLabel}>Email</Text>
+        <TextInput
+          style={genericStyles.textInput}
+          placeholderTextColor={genericStyles.textInput}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+        <Text style={genericStyles.textLabel}>Password</Text>
+        <TextInput
+          style={genericStyles.textInput}
+          placeholderTextColor={genericStyles.textInput.color}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
+        <Ionicons.Button onPress={handleLogin} style={genericStyles.button}>
+          <Icon name="ios-log-in" size={20} color="white" />
+          <Text style={genericStyles.textLabel}>Login</Text>
+        </Ionicons.Button>
+      </View>
+    </ScrollView>
   );
 }
+const styles = StyleSheet.create({});
