@@ -8,6 +8,7 @@ const commonColor = {
   secondaryColor: "#41BF8D",
   tertiaryColor: "#8D41BF",
   commonBlack: "#000000",
+  lighterBlack: "#333333",
 };
 
 const light = {
@@ -58,4 +59,4 @@ const genericStyles = StyleSheet.create({
   },
 });
 
-export { genericStyles, light, dark };
+export { genericStyles, light, dark,commonColor };
