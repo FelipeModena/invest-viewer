@@ -1,16 +1,25 @@
 //give me a generic home page
 
 import React from "react";
-import { View, Text, Button, StyleSheet, TextInput } from "react-native";
-import {genericStyles} from "../../assets/styles/style";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import { genericStyles } from "../../assets/styles/style";
 
 export function Home({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Usuário</Text>
-      <TextInput style={genericStyles.textInput}></TextInput>
-      <Text>Senha</Text>
-    </View>
+    <ScrollView style={genericStyles.body}>
+      <Button
+        title="Go to Settings"
+        onPress={() => navigation.navigate("Settings")}
+      />
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
