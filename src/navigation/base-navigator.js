@@ -2,20 +2,33 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Home } from "../screens/home";
-import { Login } from "../screens/login";
 import { Settings } from "../screens/settings";
+import ContractDetailScreen from "../screens/contract-detail";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-export function BaseNavigator({ navigation }) {
+export function BaseNavigator() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="HomeTab" component={HomeStackNavigator} />
+      <Tab.Screen name="SettingsTab" component={Settings} />
+    </Tab.Navigator>
+  );
+}
+function HomeStackNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
         options={{ headerShown: false }}
-        name="Home"
+        name="HomeScreen"
         component={Home}
       />
-      <Tab.Screen name="Settings" component={Settings} />
-    </Tab.Navigator>
+      <Stack.Screen
+        name="ContractDetailScreen"
+        component={ContractDetailScreen}
+      />
+    </Stack.Navigator>
   );
 }

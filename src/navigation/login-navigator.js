@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 export function LoginNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="LoginScreen" component={Login} />
       <Stack.Screen name="Base" component={BaseNavigator} />
     </Stack.Navigator>
   );
