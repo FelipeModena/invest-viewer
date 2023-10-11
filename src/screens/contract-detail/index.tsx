@@ -1,8 +1,17 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Button } from "react-native";
 import React from "react";
 import contracts from "../../assets/mocks/contracts";
 import { LineChart, yAxisSides } from "react-native-gifted-charts";
-import { genericStyles } from "../../assets/styles/style";
+import { commonColor, genericStyles } from "../../assets/styles/style";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
+interface ChartData {
+  date: string;
+  value: number;
+  isFirstDayOfMonth: boolean;
+  labelTextStyle?: { color: string; width: number } | undefined;
+  label?: string | undefined;
+}
 
 const ContractDetailScreen = ({ route, navigation }: any) => {
   const { id } = route.params || "21";
@@ -29,6 +38,9 @@ const ContractDetailScreen = ({ route, navigation }: any) => {
       date: formattedDate,
       value: contract.moneySum,
       isFirstDayOfMonth: date.getDate() === 1,
+      labelTextStyle:
+        date.getDate() === 1 ? { color: "lightgray", width: 60 } : undefined,
+      label: date.getDate() === 1 ? formattedDate : undefined,
     };
   });
 
@@ -92,6 +104,25 @@ const ContractDetailScreen = ({ route, navigation }: any) => {
     <ScrollView style={genericStyles.body}>
       {SecondChart(ptData)}
       {SecondChart(lineDataRealChart2)}
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+
+          backgroundColor: commonColor.commonWhite,
+          marginVertical: 10,
+          padding: 5,
+        }}
+      >
+        <FontAwesome5.Button
+          name="hands-helping"
+          style={genericStyles.button}
+        ></FontAwesome5.Button>
+        <Text style={genericStyles.textLabel}>Login</Text>
+        <Button title="oie"></Button>
+      </View>
     </ScrollView>
   );
 
@@ -121,21 +152,22 @@ const ContractDetailScreen = ({ route, navigation }: any) => {
   }
 };
 
-const SecondChart = (ptData: Array<any>) => {
-  let maxValue;
+const SecondChart = (ptData: Array<ChartData>) => {
+  let maxValue = 0;
   if (ptData?.length > 0) {
-    maxValue = ptData.reduce((max, item) => {
-      console.log(item?.isFirstDayOfMonth);
-      
-      return Math.max(max, item.value);
+    const max = ptData.reduce((max: ChartData, item: ChartData) => {
+      console.log(item.value);
+
+      return item.value > max.value ? item : max;
     });
+
+    maxValue = max.value;
   }
 
   return (
     <View
       style={{
-        paddingVertical: 10,
-        paddingHorizontal: 5,
+        paddingVertical: 100,
       }}
     >
       <LineChart
@@ -143,20 +175,19 @@ const SecondChart = (ptData: Array<any>) => {
         data={ptData}
         rotateLabel
         width={300}
-        hideDataPoints
-        spacing={10}
+        scrollToEnd={true}
+        isAnimated={true}
         color="#00ff83"
         thickness={2}
         startFillColor="rgba(20,105,81,0.3)"
         endFillColor="rgba(20,85,81,0.01)"
         startOpacity={0.9}
-        endOpacity={0.2}
+        endOpacity={0.1}
         initialSpacing={0}
         noOfSections={6}
-        maxValue={maxValue}
+        maxValue={maxValue + maxValue * 0.1}
         yAxisColor="white"
         yAxisThickness={0}
-        rulesType="solid"
         rulesColor="gray"
         yAxisTextStyle={{ color: "gray" }}
         yAxisSide={yAxisSides.LEFT}
@@ -195,14 +226,13 @@ const SecondChart = (ptData: Array<any>) => {
 
                 <View
                   style={{
-                    paddingHorizontal: 14,
                     paddingVertical: 6,
                     borderRadius: 16,
                     backgroundColor: "white",
                   }}
                 >
                   <Text style={{ fontWeight: "bold", textAlign: "center" }}>
-                    {"$" + items[0].value + ".0"}
+                    {"US$" + items[0].value}
                   </Text>
                 </View>
               </View>
