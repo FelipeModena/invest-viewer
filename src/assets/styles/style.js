@@ -9,6 +9,9 @@ const commonColor = {
   tertiaryColor: "#8D41BF",
   commonBlack: "#000000",
   lighterBlack: "#333333",
+  success: "#41BF8D",
+  failure: "#BF4141",
+  warning: "#BF8D41",
 };
 
 const light = {
@@ -32,6 +35,7 @@ const dark = {
 const genericStyles = StyleSheet.create({
   body: {
     backgroundColor: "#272727",
+    color: "white",
   },
   container: {
     flex: 1,
@@ -59,4 +63,4 @@ const genericStyles = StyleSheet.create({
   },
 });
 
-export { genericStyles, light, dark,commonColor };
+export { genericStyles, light, dark, commonColor };
