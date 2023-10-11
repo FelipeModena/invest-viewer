@@ -58,7 +58,7 @@ export function Home() {
     <ScrollView style={genericStyles.body}>
       <ContractChart />
       <View style={genericStyles.container}>
-        <Text>Contrados ativos</Text>
+        <Text>Contratos ativos</Text>
         {infoCardsContracts}
       </View>
     </ScrollView>
