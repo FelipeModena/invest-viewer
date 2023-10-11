@@ -1,12 +1,12 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import contracts from "../../assets/mocks/contracts";
-import { LineChart } from "react-native-gifted-charts";
+import { LineChart, yAxisSides } from "react-native-gifted-charts";
 import { genericStyles } from "../../assets/styles/style";
 
-const ContractDetailScreen = ({ route, navigation }) => {
-  const { id } = route.params;
-  const { contractNumber } = route.params;
+const ContractDetailScreen = ({ route, navigation }: any) => {
+  const { id } = route.params || "21";
+  const { contractNumber } = route.params || "21";
   navigation.setOptions({
     title: `Contrato #${contractNumber ? contractNumber : ""}`,
   });
@@ -19,54 +19,21 @@ const ContractDetailScreen = ({ route, navigation }) => {
     };
   });
   const lineDataRealChart2 = contracts[0].data.map((contract) => {
-    const [monthStr, yearStr] = contract.month.split('/');
-    const date = new Date(yearStr, monthStr - 1, 1);
-    const formattedMonth = date.toLocaleString("default", { month: "long" });
-    const formattedYear = date.getFullYear();
-    const formattedDate = `${formattedMonth}/${formattedYear}`;
+    const [monthStr, yearStr] = contract.month.split("/");
+    const date = new Date(parseInt(yearStr), parseInt(monthStr) - 1, 1);
+    const formattedDate = `${date.getDate()} ${date.toLocaleString("default", {
+      month: "short",
+    })} ${date.getFullYear()}`;
+
     return {
-      value: contract.moneySum,
       date: formattedDate,
+      value: contract.moneySum,
+      isFirstDayOfMonth: date.getDate() === 1,
     };
   });
 
-  return (
-    <ScrollView style={genericStyles.body}>
-      <Text>sd</Text>
-      {/* {lineChartDetail()} */}
-      {SecondChart(lineDataReal)}
-    </ScrollView>
-  );
-
-  function lineChartDetail() {
-    return (
-      <LineChart
-        initialSpacing={0}
-        data={lineDataReal}
-        textColor1="yellow"
-        textShiftY={-8}
-        textShiftX={-10}
-        textFontSize={13}
-        thickness={1}
-        focusEnabled
-        scrollToEnd
-        isAnimated
-        showStripOnFocus
-        showTextOnFocus
-        hideRules
-        yAxisColor="#0BA5A4"
-        showVerticalLines
-        verticalLinesColor="rgba(14,164,164,0.5)"
-        xAxisColor="#0BA5A4"
-        color="#0BA5A4"
-      />
-    );
-  }
-};
-
-const SecondChart = (ptData2) => {
   const ptData = [
-    { value: 160, date: "1 Apr 2022", dataPointText: "R$ 160" },
+    { value: 160, date: "1 Apr 2022" },
     { value: 180, date: "2 Apr 2022" },
     { value: 190, date: "3 Apr 2022" },
     { value: 180, date: "4 Apr 2022" },
@@ -122,18 +89,60 @@ const SecondChart = (ptData2) => {
   ];
 
   return (
+    <ScrollView style={genericStyles.body}>
+      {SecondChart(ptData)}
+      {SecondChart(lineDataRealChart2)}
+    </ScrollView>
+  );
+
+  function lineChartDetail() {
+    return (
+      <LineChart
+        initialSpacing={0}
+        data={lineDataReal}
+        textColor1="yellow"
+        textShiftY={-8}
+        textShiftX={-10}
+        textFontSize={13}
+        thickness={1}
+        focusEnabled
+        scrollToEnd
+        isAnimated
+        showStripOnFocus
+        showTextOnFocus
+        hideRules
+        yAxisColor="#0BA5A4"
+        showVerticalLines
+        verticalLinesColor="rgba(14,164,164,0.5)"
+        xAxisColor="#0BA5A4"
+        color="#0BA5A4"
+      />
+    );
+  }
+};
+
+const SecondChart = (ptData: Array<any>) => {
+  let maxValue;
+  if (ptData?.length > 0) {
+    maxValue = ptData.reduce((max, item) => {
+      console.log(item?.isFirstDayOfMonth);
+      
+      return Math.max(max, item.value);
+    });
+  }
+
+  return (
     <View
       style={{
-        paddingVertical: 100,
-        paddingLeft: 20,
-        backgroundColor: "#1C1C1C",
+        paddingVertical: 10,
+        paddingHorizontal: 5,
       }}
     >
       <LineChart
         areaChart
         data={ptData}
         rotateLabel
-        width={"400"}
+        width={300}
         hideDataPoints
         spacing={10}
         color="#00ff83"
@@ -144,13 +153,13 @@ const SecondChart = (ptData2) => {
         endOpacity={0.2}
         initialSpacing={0}
         noOfSections={6}
-        maxValue={600}
+        maxValue={maxValue}
         yAxisColor="white"
         yAxisThickness={0}
         rulesType="solid"
         rulesColor="gray"
         yAxisTextStyle={{ color: "gray" }}
-        yAxisSide="right"
+        yAxisSide={yAxisSides.LEFT}
         xAxisColor="lightgray"
         pointerConfig={{
           pointerStripHeight: 160,
@@ -162,7 +171,7 @@ const SecondChart = (ptData2) => {
           pointerLabelHeight: 90,
           activatePointersOnLongPress: true,
           autoAdjustPointerLabelPosition: false,
-          pointerLabelComponent: (items) => {
+          pointerLabelComponent: (items: any) => {
             return (
               <View
                 style={{
