@@ -10,9 +10,9 @@ import {
   ScrollView,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons";
 import { genericStyles } from "../../assets/styles/style";
 import imageStyle from "../../assets/styles/image-style";
-import Icon from "react-native-vector-icons/Ionicons";
 import authenticate from "../../store/services/auth";
 
 export function Login({ navigation }) {
