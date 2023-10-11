@@ -11,14 +11,56 @@ import {
   SafeAreaView,
 } from "react-native";
 import { genericStyles } from "../../assets/styles/style";
+import { ContractChart } from "../../components/home/contracts-chart";
+import InfoCard from "../../components/generic/info-card";
 
-export function Home({ navigation }) {
+const contractsList = [
+  {
+    id: 1,
+    contractNumber: "000457",
+    actualRoi: 7.3,
+    contractInitialValue: 20000,
+    contractActualValue: 22304,
+  },
+  {
+    id: 2,
+    contractNumber: "000458",
+    actualRoi: 8.1,
+    contractInitialValue: 25000,
+    contractActualValue: 27025,
+  },
+
+  {
+    id: 4,
+    contractNumber: "000460",
+    actualRoi: 9.21,
+    contractInitialValue: 30000,
+    contractActualValue: 32760,
+  },
+];
+
+infoCardsContracts = contractsList.map((contract) => {
+  return (
+    <InfoCard
+      actualRoi={contract.actualRoi}
+      key={contract.id}
+      contractActualValue={contract.contractActualValue}
+      contractInitialValue={contract.contractInitialValue}
+      contractNumber={contract.contractNumber}
+      id={contract.id}
+      routeTo={"detail"}
+    />
+  );
+});
+
+export function Home() {
   return (
     <ScrollView style={genericStyles.body}>
-      <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate("Settings")}
-      />
+      <ContractChart />
+      <View style={genericStyles.container}>
+        <Text>Contrados ativos</Text>
+        {infoCardsContracts}
+      </View>
     </ScrollView>
   );
 }
