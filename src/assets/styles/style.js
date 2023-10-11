@@ -35,7 +35,7 @@ const dark = {
 const genericStyles = StyleSheet.create({
   body: {
     backgroundColor: "#272727",
-    color: "white",
+    color: "#fff",
   },
   container: {
     flex: 1,
