@@ -4,38 +4,48 @@ import { commonColor, genericStyles } from "../../assets/styles/style";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 
-function InfoCard({
-  id,
-  contractNumber,
-  actualRoi,
-  contractInitialValue,
-  contractActualValue,
-  routeTo,
-}) {
-  const navigation = useNavigation();
+interface infoCardProps {
+  id: number;
+  contractNumber: string;
+  actualRoi: number;
+  contractInitialValue: number;
+  contractActualValue: number;
+  routeTo: string;
+}
 
+function InfoCard(infoCardProps: infoCardProps) {
+  const navigation = useNavigation();
+  // id: infoCardProps.id,
+  //             contractNumber: infoCardProps.contractNumber,
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() =>
-        routeTo ? navigation.navigate("ContractDetailScreen", { id,contractNumber }) : null
+        infoCardProps.routeTo
+          ? navigation.navigate("ContractDetailScreen", {
+              id: infoCardProps.id,
+              contractNumber: infoCardProps.contractNumber,
+            })
+          : null
       }
     >
       <View style={{ flex: 1 }}>
         <View>
-          <Text style={{ fontSize: 16 }}># {contractNumber}</Text>
+          <Text style={{ fontSize: 16 }}># {infoCardProps.contractNumber}</Text>
         </View>
-        <View style={{ fontSize: 14 }}>
+        <View>
           <Text style={{ fontSize: 12 }}>
-            Valor inicial:{contractInitialValue}
+            Valor inicial:{infoCardProps.contractInitialValue}
           </Text>
-          <Text>Valor atual: {contractActualValue}</Text>
+          <Text style={{ fontSize: 14 }}>
+            Valor atual: {infoCardProps.contractActualValue}
+          </Text>
         </View>
       </View>
 
       <View>
-        <Text style={{ fontSize: 20, color:commonColor.success }} >
-          {actualRoi}% <Text style={{ fontSize: 9 }}>asd</Text>
+        <Text style={{ fontSize: 20, color: commonColor.success }}>
+          {infoCardProps.actualRoi}% <Text style={{ fontSize: 9 }}>asd</Text>
         </Text>
       </View>
       <View>
