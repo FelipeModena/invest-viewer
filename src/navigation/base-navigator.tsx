@@ -11,7 +11,14 @@ const Stack = createNativeStackNavigator();
 
 import { createStackNavigator } from "@react-navigation/stack";
 
-export function BaseNavigator() {
+type RootStackParamList = {
+  Home: undefined;
+  
+};
+
+
+
+export function RootNavigator() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="HomeTab" component={HomeStackNavigator} />
