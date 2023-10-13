@@ -14,7 +14,7 @@ export function ContractChart() {
     { value: 16, color: "#507D18", gradientCenterColor: "#8F80F3" },
   ];
 
-  const renderDot = (color) => {
+  const renderDot = (color:string) => {
     return (
       <View
         style={{
