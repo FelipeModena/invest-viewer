@@ -39,7 +39,7 @@ const contractsList = [
   },
 ];
 
-infoCardsContracts = contractsList.map((contract) => {
+const infoCardsContracts = contractsList.map((contract) => {
   return (
     <InfoCard
       actualRoi={contract.actualRoi}
