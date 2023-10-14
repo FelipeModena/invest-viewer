@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosOpenExInstance = axios.create({
   baseURL: "https://openexchangerates.org/api/",
   params: {
-    app_id: "33e45ab0d91d418196396a98aa323a91",
+    app_id: process.env.EXPO_APP_ID_KEY,
   },
   timeout: 5000,
   headers: {
