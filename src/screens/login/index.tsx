@@ -10,21 +10,14 @@ import {
   ScrollView,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Icon from "react-native-vector-icons/Ionicons";
 import { genericStyles } from "../../assets/styles/style";
 import imageStyle from "../../assets/styles/image-style";
 import authenticate from "../../store/auth";
-import axiosOpenExInstance from "../../services/axios";
 
-export function Login({navigation} :any) {
+export function Login({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function getRates() {
-    const res = await axiosOpenExInstance.get("latest.json/");
-    console.log(res.data);
-  }
-  // getRates();
   const handleLogin = async () => {
     const user = await authenticate(email, password);
 
