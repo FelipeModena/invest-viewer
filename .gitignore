@@ -34,3 +34,5 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 src/assets/mocks/*
+.vscode/settings.json
+.env
