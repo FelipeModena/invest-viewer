@@ -13,7 +13,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { genericStyles } from "../../assets/styles/style";
 import imageStyle from "../../assets/styles/image-style";
-import authenticate from "../../store/services/auth";
+import authenticate from "../../store/auth";
 
 export function Login({ navigation }) {
   const [email, setEmail] = useState("");
