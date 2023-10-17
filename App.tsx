@@ -4,7 +4,6 @@ import React from "react";
 export default function App() {
   return (
     <NavigationContainer>
-      {/* <BaseNavigator /> */}
       <LoginNavigator />
     </NavigationContainer>
   );
