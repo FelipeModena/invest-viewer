@@ -8,6 +8,8 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { genericStyles } from "../../assets/styles/style";
@@ -15,15 +17,22 @@ import imageStyle from "../../assets/styles/image-style";
 import authenticate from "../../store/auth";
 
 export function Login({ navigation }: any) {
-  const [email, setEmail] = useState("");
+  const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    const user = await authenticate(email, password);
-
-    if (user) {
-      navigation.navigate("Base");
+    setLoading(true);
+    try {
+      const user = await authenticate({ password, username: userName });
+    } catch (error) {
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleCreateAccount = () => {
+    navigation.navigate("CreateAccount");
   };
 
   return (
@@ -37,27 +46,33 @@ export function Login({ navigation }: any) {
           source={require("../../assets/imgs/general/vault.png")}
           resizeMode="contain"
         />
-        <Text style={genericStyles.textLabel}>Email</Text>
+        <Text style={genericStyles.textLabel}>Usuário</Text>
         <TextInput
+          shouldRasterizeIOS
           style={genericStyles.textInput}
           placeholderTextColor={genericStyles.textInput as any}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+          value={userName}
+          onChangeText={(text) => setuserName(text)}
         />
-        <Text style={genericStyles.textLabel}>Password</Text>
+        <Text style={genericStyles.textLabel}>Senha</Text>
         <TextInput
+          secureTextEntry={true}
           style={genericStyles.textInput}
           placeholderTextColor={genericStyles.textInput.color}
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        <Ionicons.Button
-          name="ios-log-in"
-          onPress={handleLogin}
-          style={genericStyles.button}
-        >
-          <Text style={genericStyles.textLabel}>Login</Text>
-        </Ionicons.Button>
+        {loading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <Ionicons.Button
+            name="ios-log-in"
+            onPress={handleLogin}
+            style={genericStyles.button}
+          >
+            <Text style={genericStyles.textLabel}>Login</Text>
+          </Ionicons.Button>
+        )}
       </View>
     </ScrollView>
   );
