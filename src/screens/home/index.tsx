@@ -12,8 +12,8 @@ import {
 import { genericStyles } from "../../assets/styles/style";
 import { ContractChart } from "../../components/home/contracts-chart";
 import InfoCard from "../../components/home/info-card";
-import contractsMock from "../../assets/mocks/contracts";
 import axiosOpenExInstance from "../../services/axios";
+import contractsMock from "../../assets/mocks/contracts";
 
 const infoCardsContracts = contractsMock.map((contract) => {
   return (
