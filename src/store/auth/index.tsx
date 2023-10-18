@@ -23,7 +23,7 @@ const authenticate = async ({
     return true;
   } catch (error) {
     console.error(error);
-    Alert.alert("Error", "Invalid username or password");
+    Alert.alert("Error", "Usuário ou senha inválidos");
     return false;
   }
 };
